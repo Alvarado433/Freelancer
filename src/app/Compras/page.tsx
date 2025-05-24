@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import FormaPagamento from "@/components/pagamentos/Pix/pix";
-import Footer from "@/components/Footer/Footer";
 import FooterPagamento from "@/components/Footer/rodape";
 
 export default function Pagamentos() {
@@ -12,7 +12,6 @@ export default function Pagamentos() {
   const [pagamentoSelecionado, setPagamentoSelecionado] = useState("");
   const [cupom, setCupom] = useState("");
   const [descontoAplicado, setDescontoAplicado] = useState(false);
-  const [valorTotal, setValorTotal] = useState(200.0);
   const [cep, setCep] = useState("");
   const [frete, setFrete] = useState<number | null>(null);
   const [mensagemFrete, setMensagemFrete] = useState("");
@@ -47,7 +46,6 @@ export default function Pagamentos() {
 
   const aplicarCupom = () => {
     if (cupom.toUpperCase() === "DESCONTO10" && !descontoAplicado) {
-      setValorTotal(totalComDesconto);
       setDescontoAplicado(true);
     }
   };
@@ -67,15 +65,6 @@ export default function Pagamentos() {
       setMensagemFrete("");
     }
   }, [cep]);
-
-  // Atualiza valor total quando desconto é aplicado
-  useEffect(() => {
-    if (descontoAplicado) {
-      setValorTotal(totalComDesconto);
-    } else {
-      setValorTotal(subtotal);
-    }
-  }, [descontoAplicado, subtotal, totalComDesconto]);
 
   return (
     <>
@@ -158,16 +147,15 @@ export default function Pagamentos() {
       >
         <header className="bg-primary text-white py-3 shadow-sm">
           <div className="container d-flex justify-content-between align-items-center">
-            <a
+            <Link
               href="/"
               className="text-white text-decoration-none fw-bold d-flex align-items-center gap-2"
             >
               <i className="bi bi-arrow-left-circle-fill fs-4"></i>
               Voltar
-            </a>
+            </Link>
             <h5 className="m-0 d-flex align-items-center gap-2 fw-semibold">
-              <i className="bi bi-shield-lock-fill fs-5"></i> Checkout 100%
-              Seguro
+              <i className="bi bi-shield-lock-fill fs-5"></i> Checkout 100% Seguro
             </h5>
           </div>
         </header>
@@ -195,6 +183,7 @@ export default function Pagamentos() {
               </div>
             ))}
           </div>
+
           {etapa === 1 && (
             <div className="row gy-4 gx-md-5">
               {/* Carrinho */}
@@ -221,9 +210,7 @@ export default function Pagamentos() {
                               className="rounded-3 shadow-sm"
                             />
                             <div>
-                              <h6 className="mb-1 fw-semibold">
-                                {produto.nome}
-                              </h6>
+                              <h6 className="mb-1 fw-semibold">{produto.nome}</h6>
                               <small className="text-muted">
                                 Produto #{produto.id}
                               </small>
@@ -271,9 +258,7 @@ export default function Pagamentos() {
                   </div>
 
                   {/* Cupom */}
-                  <label className="form-label fw-semibold">
-                    Cupom de Desconto
-                  </label>
+                  <label className="form-label fw-semibold">Cupom de Desconto</label>
                   <div className="input-group mb-4 shadow-sm">
                     <input
                       type="text"
@@ -310,15 +295,11 @@ export default function Pagamentos() {
                     )}
                     <li className="list-group-item d-flex justify-content-between">
                       <span>Frete:</span>
-                      <strong>
-                        {frete !== null ? `R$ ${frete.toFixed(2)}` : "-"}
-                      </strong>
+                      <strong>{frete !== null ? `R$ ${frete.toFixed(2)}` : "-"}</strong>
                     </li>
                     <li className="list-group-item d-flex justify-content-between fw-bold fs-5 bg-light">
                       <span>Total:</span>
-                      <strong>
-                        R$ {(totalComDesconto + (frete ?? 0)).toFixed(2)}
-                      </strong>
+                      <strong>R$ {(totalComDesconto + (frete ?? 0)).toFixed(2)}</strong>
                     </li>
                   </ul>
 
@@ -346,26 +327,18 @@ export default function Pagamentos() {
               setEtapa={setEtapa}
             />
           )}
+
           {etapa === 3 && (
-            <section className="d-flex flex-column align-items-center justify-content-center">
-              <div className="alert alert-success w-100 text-center py-5">
-                <i className="bi bi-check-circle-fill fs-1 mb-3 text-success"></i>
-                <h2>Pedido Confirmado!</h2>
-                <p className="lead">Obrigado pela sua compra.</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    setEtapa(1);
-                    setPagamentoSelecionado("");
-                    setCupom("");
-                    setDescontoAplicado(false);
-                    setFrete(null);
-                    setMensagemFrete("");
-                  }}
-                >
-                  Fazer nova compra
-                </button>
-              </div>
+            <section className="text-center py-5">
+              <i className="bi bi-check-circle-fill fs-1 text-success mb-3"></i>
+              <h2 className="fw-bold mb-3">Compra realizada com sucesso!</h2>
+              <p className="mb-4">
+                Obrigado pela sua compra. Você receberá um e-mail com os detalhes da
+                confirmação.
+              </p>
+              <Link href="/" className="btn btn-success px-4 py-2 fw-semibold">
+                Voltar à Home
+              </Link>
             </section>
           )}
         </div>
