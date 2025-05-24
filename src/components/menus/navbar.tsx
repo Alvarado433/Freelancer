@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   FaUser,
   FaShoppingCart,
@@ -10,9 +11,7 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import CarrinhoDrawer from "../Carrinho/Compra";
-
- // ajuste o caminho conforme seu projeto
+import CarrinhoDrawer from "../Carrinho/Compra"; // ajuste o caminho conforme seu projeto
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,7 +19,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarDropdownOpen, setSidebarDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  
+
   // Estado para abrir/fechar carrinho
   const [isCarrinhoOpen, setIsCarrinhoOpen] = useState(false);
 
@@ -67,13 +66,14 @@ export default function Navbar() {
           {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
 
-        <a
+        <Link
+          href="/"
           className={`navbar-brand ${menuOpen ? "mx-auto" : "mx-lg-0"} d-flex justify-content-center flex-grow-1`}
-          href="#"
           style={{ maxWidth: 120 }}
+          aria-label="Página inicial"
         >
           <Image src="/img/Logotipo.png" alt="Logotipo" width={120} height={60} />
-        </a>
+        </Link>
 
         <form
           className="search-group-desktop d-none d-md-flex mx-auto flex-grow-1 justify-content-center"
@@ -103,12 +103,12 @@ export default function Navbar() {
               <div className="dropdown-user-menu shadow rounded bg-white">
                 <p className="mb-2 px-3 pt-3 text-dark fw-bold">Olá, Convidado</p>
                 <div className="px-3 pb-3 d-flex flex-column gap-2">
-                  <a href="/login" className="btn btn-outline-danger btn-sm w-100">
-                    Entrar
-                  </a>
-                  <a href="/criar-conta" className="btn btn-danger btn-sm w-100">
-                    Criar Conta
-                  </a>
+                  <Link href="/login" legacyBehavior>
+                    <a className="btn btn-outline-danger btn-sm w-100">Entrar</a>
+                  </Link>
+                  <Link href="/criar-conta" legacyBehavior>
+                    <a className="btn btn-danger btn-sm w-100">Criar Conta</a>
+                  </Link>
                 </div>
               </div>
             )}
@@ -148,14 +148,14 @@ export default function Navbar() {
 
         <div className={`dropdown-categorias ${dropdownOpen ? "show" : ""}`}>
           {categorias.map((categoria) => (
-            <a
-              href={`/categoria/${categoria.toLowerCase()}`}
-              key={categoria}
-              className="dropdown-link"
-              onClick={() => setDropdownOpen(false)}
-            >
-              {categoria}
-            </a>
+            <Link key={categoria} href={`/categoria/${categoria.toLowerCase()}`} legacyBehavior>
+              <a
+                className="dropdown-link"
+                onClick={() => setDropdownOpen(false)}
+              >
+                {categoria}
+              </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -175,15 +175,15 @@ export default function Navbar() {
           </div>
         </div>
         <nav className="nav flex-column">
-          <a href="/" className="nav-link mb-3">
-            Home
-          </a>
-          <a href="/produtos" className="nav-link mb-3">
-            Produtos
-          </a>
-          <a href="/contato" className="nav-link mb-3">
-            Contato
-          </a>
+          <Link href="/" legacyBehavior>
+            <a className="nav-link mb-3">Home</a>
+          </Link>
+          <Link href="/produtos" legacyBehavior>
+            <a className="nav-link mb-3">Produtos</a>
+          </Link>
+          <Link href="/contato" legacyBehavior>
+            <a className="nav-link mb-3">Contato</a>
+          </Link>
           {/* Dropdown de categorias no sidebar mobile */}
           <div className="sidebar-dropdown">
             <button
@@ -198,17 +198,21 @@ export default function Navbar() {
             </button>
             <div className={`dropdown-categorias-sidebar ${sidebarDropdownOpen ? "show" : ""}`}>
               {categorias.map((categoria) => (
-                <a
-                  href={`/categoria/${categoria.toLowerCase()}`}
+                <Link
                   key={categoria}
-                  className="dropdown-link-sidebar"
-                  onClick={() => {
-                    setSidebarDropdownOpen(false);
-                    setMenuOpen(false);
-                  }}
+                  href={`/categoria/${categoria.toLowerCase()}`}
+                  legacyBehavior
                 >
-                  {categoria}
-                </a>
+                  <a
+                    className="dropdown-link-sidebar"
+                    onClick={() => {
+                      setSidebarDropdownOpen(false);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {categoria}
+                  </a>
+                </Link>
               ))}
             </div>
           </div>
