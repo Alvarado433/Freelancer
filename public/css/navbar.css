@@ -1,0 +1,273 @@
+/* ============================= */
+/* 1. Mensagem Promocional       */
+/* ============================= */
+.mensagem-promocional {
+  background: linear-gradient(90deg, #fce4ec 0%, #f8bbd0 100%);
+  color: #2c2c2c;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 6px rgba(171, 111, 157, 0.25);
+  border-radius: 0 0 6px 6px;
+  position: relative;
+  z-index: 10;
+}
+
+.mensagem-promocional strong {
+  color: #d81b60;
+  font-weight: 600;
+}
+
+.link-regulamento {
+  color: #6a1b9a;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.link-regulamento:hover {
+  color: #4a148c;
+}
+
+/* Sidebar */
+.sidebar-menu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  padding: 1.5rem;
+  box-shadow: 2px 0 8px rgb(0 0 0 / 0.15);
+  transition: left 0.3s ease-in-out;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-menu.open {
+  left: 0;
+}
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1040;
+}
+.nav-link {
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-link:hover {
+  color: #d6336c;
+  text-decoration: none;
+}
+
+/* Dropdown desktop categorias */
+.categorias-container {
+  background-color: #d6336c;
+  padding: 0.5rem 1rem;
+  position: relative;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  user-select: none;
+  z-index: 111;
+}
+.categoria-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.categoria-toggle:hover,
+.categoria-toggle:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+.icon {
+  transition: transform 0.3s ease;
+}
+.icon.rotated {
+  transform: rotate(180deg);
+}
+.dropdown-categorias {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.25rem;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  width: max-content;
+  min-width: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 120;
+}
+.dropdown-categorias.show {
+  max-height: 400px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.dropdown-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.dropdown-link:hover {
+  background-color: #f8d7df;
+  color: #d6336c;
+  text-decoration: none;
+}
+
+/* Dropdown sidebar categorias */
+.categoria-toggle-sidebar {
+  background: none;
+  border: none;
+  color: #d6336c;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  text-align: left;
+}
+.categoria-toggle-sidebar:hover,
+.categoria-toggle-sidebar:focus {
+  background-color: #f8d7df;
+  outline: none;
+}
+.icon-sidebar {
+  transition: transform 0.3s ease;
+  margin-left: auto;
+}
+.icon-sidebar.rotated {
+  transform: rotate(180deg);
+}
+.dropdown-categorias-sidebar {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.dropdown-categorias-sidebar.show {
+  max-height: 300px;
+}
+.dropdown-link-sidebar {
+  display: block;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.dropdown-link-sidebar:hover {
+  background-color: #f8d7df;
+  color: #d6336c;
+  text-decoration: none;
+}
+
+/* Dropdown menu usuário */
+.dropdown-user-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.3rem;
+  width: 160px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 120;
+}
+.dropdown-user-menu p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Busca flutuante (lupa) responsiva */
+.floating-search-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background: white;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.15);
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideDown 0.3s ease forwards;
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.floating-search-form {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  gap: 0.5rem;
+}
+.floating-search-input {
+  flex-grow: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid #d6336c;
+  border-radius: 4px;
+  outline-color: #d6336c;
+}
+.floating-search-btn {
+  background: transparent;
+  border: none;
+  color: #d6336c;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  transition: color 0.2s;
+}
+.floating-search-btn:hover,
+.floating-search-btn:focus {
+  color: #a02040;
+  outline: none;
+}
+
+/* Oculta a busca flutuante no desktop */
+@media (min-width: 768px) {
+  .floating-search-container {
+    display: none;
+  }
+}

@@ -1,0 +1,115 @@
+/* produtos.css */
+
+.produto-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.produto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+}
+
+.produto-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card-body {
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.estrelas {
+  color: #ffc107;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.produto-nome {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-top: 0.25rem;
+}
+
+.produto-preco {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e83e8c;
+  margin-top: 0.25rem;
+}
+
+.produto-parcela {
+  font-size: 0.95rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.btn-sacola {
+  background-color: #e83e8c;
+  color: #fff;
+  border: 2px solid #e83e8c;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.btn-sacola:hover {
+  background-color: #fff;
+  color: #e83e8c;
+  border: 2px solid #e83e8c;
+}
+
+/* Melhorias adicionais no carousel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(232, 62, 140, 0.8);
+  border-radius: 50%;
+  padding: 10px;
+  filter: invert(1);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+}
+
+/* Aumentar o espaçamento geral */
+.produtos.container {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* Botão de ver todos os produtos */
+.produtos a.btn {
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  border-color: #e83e8c;
+  color: #e83e8c;
+}
+
+.produtos a.btn:hover {
+  background-color: #e83e8c;
+  color: white;
+  border-color: #e83e8c;
+}
