@@ -5,7 +5,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "../../public/css/Banner.css";
 import "../../public/css/vendidos.css";
-import "../../public/css/sidebar.css";
+
 import "../../public/css/Footer.css";
 import "../../public/css/produto.css";
 import "../../public/css/cardsprodutos.css";
