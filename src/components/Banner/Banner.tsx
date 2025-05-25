@@ -41,18 +41,10 @@ export default function Banner(): JSX.Element {
           </div>
         ))}
 
-        <button
-          className="control prev"
-          onClick={prevSlide}
-          aria-label="Anterior"
-        >
+        <button className="control prev" onClick={prevSlide} aria-label="Anterior">
           &#10094;
         </button>
-        <button
-          className="control next"
-          onClick={nextSlide}
-          aria-label="Próximo"
-        >
+        <button className="control next" onClick={nextSlide} aria-label="Próximo">
           &#10095;
         </button>
       </div>
@@ -77,7 +69,7 @@ export default function Banner(): JSX.Element {
           position: relative;
           width: 100%;
           height: 0;
-          padding-bottom: 40%;
+          padding-bottom: 65%; /* AUMENTADO de 55% para 65% */
           background-color: #f7f7f7;
         }
 
@@ -152,7 +144,12 @@ export default function Banner(): JSX.Element {
 
         @media (max-width: 768px) {
           .slide-wrapper {
-            padding-bottom: 60%;
+            padding-bottom: 65%;
+          }
+
+          .slide-image {
+            object-fit: contain; /* MOSTRA A IMAGEM COMPLETA NO RESPONSIVO */
+            background-color: white; /* fundo neutro caso a imagem não cubra tudo */
           }
 
           .control {
