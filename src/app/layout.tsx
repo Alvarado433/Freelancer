@@ -12,7 +12,7 @@ import "../../public/css/cardsprodutos.css";
 import "../../public/css/navbar.css";
 // não importe o bootstrap.bundle.min.js aqui
 
-import type { Metadata } from "next";
+
 import "./globals.css";
 
 export default function RootLayout({
