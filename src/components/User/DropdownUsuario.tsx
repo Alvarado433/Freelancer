@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import { FaUser } from "react-icons/fa";
 import Link from "next/link";
-import { FaUser, FaShoppingCart, FaBars, FaTimes, FaSearch, FaChevronDown } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-
-
 
 export default function DropdownUsuario() {
   const [open, setOpen] = useState(false);
