@@ -65,8 +65,8 @@ export default function Pagamentos() {
   }, [cep]);
 
   return (
-    <div className="container-fluid p-0" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
-      <header className="bg-primary text-white py-3 shadow-sm">
+    <div className="container-fluid p-0 bg-light text-dark" style={{ fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif" }}>
+      <header className="bg-primary text-white py-3 shadow-sm sticky-top">
         <div className="container d-flex justify-content-between align-items-center">
           <Link href="/" className="text-white text-decoration-none fw-bold d-flex align-items-center gap-2">
             <i className="bi bi-arrow-left-circle-fill fs-4"></i>
@@ -78,16 +78,15 @@ export default function Pagamentos() {
         </div>
       </header>
 
-      <div className="container mt-5">
+      <div className="container mt-5 pb-5">
         {/* Etapas */}
         <div className="row mb-5 text-center">
           {etapas.map((et, index) => (
             <div key={index} className="col">
               <div
-                className={`etapa-pill p-3 fw-semibold shadow-sm rounded-pill ${etapa === index + 1 ? "active" : "bg-light"}`}
+                className={`etapa-pill p-3 fw-semibold shadow-sm rounded-pill ${etapa === index + 1 ? "bg-primary text-white" : "bg-white border"}`}
                 onClick={() => setEtapa(index + 1)}
                 role="button"
-                aria-current={etapa === index + 1 ? "step" : undefined}
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") setEtapa(index + 1);
@@ -119,7 +118,7 @@ export default function Pagamentos() {
                             alt={produto.nome}
                             width={80}
                             height={80}
-                            className="rounded-3 shadow-sm"
+                            className="rounded-3 shadow-sm border"
                           />
                           <div>
                             <h6 className="mb-1 fw-semibold">{produto.nome}</h6>

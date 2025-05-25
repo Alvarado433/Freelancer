@@ -11,7 +11,7 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import CarrinhoDrawer from "../Carrinho/Compra"; // ajuste o caminho conforme seu projeto
+import CarrinhoDrawer from "../Carrinho/Compra"; // ajuste conforme seu projeto
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,8 +19,6 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarDropdownOpen, setSidebarDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-
-  // Estado para abrir/fechar carrinho
   const [isCarrinhoOpen, setIsCarrinhoOpen] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +26,6 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fecha dropdown categorias desktop clicando fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -48,12 +45,19 @@ export default function Navbar() {
     };
   }, [dropdownOpen, userDropdownOpen]);
 
-  // Focar input ao abrir busca flutuante
   useEffect(() => {
     if (searchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [searchOpen]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const searchTerm = (e.currentTarget as HTMLFormElement).querySelector("input")?.value;
+    if (searchTerm) {
+      window.location.href = `/buscar?termo=${encodeURIComponent(searchTerm)}`;
+    }
+  };
 
   return (
     <>
@@ -78,9 +82,15 @@ export default function Navbar() {
         <form
           className="search-group-desktop d-none d-md-flex mx-auto flex-grow-1 justify-content-center"
           role="search"
+          onSubmit={handleSearchSubmit}
           style={{ maxWidth: 500 }}
         >
-          <input className="form-control me-2" type="search" placeholder="Buscar produtos..." />
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Buscar produtos..."
+            name="search"
+          />
           <button className="btn btn-primary" type="submit">
             <FaSearch />
           </button>
@@ -149,10 +159,7 @@ export default function Navbar() {
         <div className={`dropdown-categorias ${dropdownOpen ? "show" : ""}`}>
           {categorias.map((categoria) => (
             <Link key={categoria} href={`/categoria/${categoria.toLowerCase()}`} legacyBehavior>
-              <a
-                className="dropdown-link"
-                onClick={() => setDropdownOpen(false)}
-              >
+              <a className="dropdown-link" onClick={() => setDropdownOpen(false)}>
                 {categoria}
               </a>
             </Link>
@@ -160,103 +167,33 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Sidebar */}
-      <aside className={`sidebar-menu ${menuOpen ? "open" : ""}`}>
-        <div className="text-center py-3 border-bottom mb-3 bg-white">
-          <FaUser size={22} className="mb-2 text-danger" />
-          <p className="mb-1 fw-bold text-dark">
-            Olá,
-            <br />
-            Convidado
-          </p>
-          <div className="d-flex justify-content-center gap-2 mt-2">
-            <button className="btn btn-outline-danger btn-sm">Entrar</button>
-            <button className="btn btn-danger btn-sm">Criar Conta</button>
-          </div>
-        </div>
-        <nav className="nav flex-column">
-          <Link href="/" legacyBehavior>
-            <a className="nav-link mb-3">Home</a>
-          </Link>
-          <Link href="/produtos" legacyBehavior>
-            <a className="nav-link mb-3">Produtos</a>
-          </Link>
-          <Link href="/contato" legacyBehavior>
-            <a className="nav-link mb-3">Contato</a>
-          </Link>
-          {/* Dropdown de categorias no sidebar mobile */}
-          <div className="sidebar-dropdown">
-            <button
-              type="button"
-              className="categoria-toggle-sidebar"
-              onClick={() => setSidebarDropdownOpen((open) => !open)}
-              aria-haspopup="true"
-              aria-expanded={sidebarDropdownOpen}
-            >
-              Categorias{" "}
-              <FaChevronDown className={`icon-sidebar ${sidebarDropdownOpen ? "rotated" : ""}`} />
-            </button>
-            <div className={`dropdown-categorias-sidebar ${sidebarDropdownOpen ? "show" : ""}`}>
-              {categorias.map((categoria) => (
-                <Link
-                  key={categoria}
-                  href={`/categoria/${categoria.toLowerCase()}`}
-                  legacyBehavior
-                >
-                  <a
-                    className="dropdown-link-sidebar"
-                    onClick={() => {
-                      setSidebarDropdownOpen(false);
-                      setMenuOpen(false);
-                    }}
-                  >
-                    {categoria}
-                  </a>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
-      </aside>
-
-      {(menuOpen || searchOpen) && (
-        <div
-          onClick={() => {
-            setMenuOpen(false);
-            setSearchOpen(false);
-            setDropdownOpen(false);
-            setSidebarDropdownOpen(false);
-            setUserDropdownOpen(false);
-          }}
-          className="sidebar-overlay"
-        />
-      )}
-
+      {/* Busca flutuante mobile */}
       {searchOpen && (
         <div className="floating-search-container">
-          <form
-            className="floating-search-form"
-            role="search"
-            onSubmit={(e) => e.preventDefault()}
-          >
+          <form className="floating-search-form" onSubmit={handleSearchSubmit}>
             <input
               ref={searchInputRef}
-              type="search"
-              className="form-control"
+              className="floating-search-input"
+              type="text"
               placeholder="Buscar produtos..."
-              aria-label="Buscar produtos"
+              name="search"
             />
+            <button type="submit" className="floating-search-btn" aria-label="Buscar">
+              <FaSearch />
+            </button>
             <button
               type="button"
-              className="btn-close"
-              aria-label="Fechar busca"
+              className="floating-search-btn"
               onClick={() => setSearchOpen(false)}
-            />
+              aria-label="Fechar"
+            >
+              <FaTimes />
+            </button>
           </form>
         </div>
       )}
 
-      {/* Aqui chamamos o CarrinhoDrawer */}
+      {/* Drawer do carrinho */}
       <CarrinhoDrawer isOpen={isCarrinhoOpen} onClose={() => setIsCarrinhoOpen(false)} />
     </>
   );
