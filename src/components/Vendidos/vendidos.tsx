@@ -1,7 +1,16 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
-const products = [
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+};
+
+const products: Product[] = [
   {
     id: 1,
     name: "Produto 1",
@@ -46,8 +55,8 @@ const products = [
   },
 ];
 
-const chunkArray = (arr: any[], size: number) => {
-  const result = [];
+const chunkArray = (arr: Product[], size: number): Product[][] => {
+  const result: Product[][] = [];
   for (let i = 0; i < arr.length; i += size) {
     result.push(arr.slice(i, i + size));
   }
@@ -82,19 +91,20 @@ const Vendidos = () => {
                     >
                       <div className="card product-card d-flex flex-column shadow-sm">
                         <div className="img-wrapper">
-                          <img
+                          <Image
                             src={product.image}
                             alt={product.name}
+                            width={400}
+                            height={220}
                             className="card-img-top"
+                            style={{ objectFit: "cover", width: "100%", height: "100%" }}
                           />
                         </div>
                         <div className="card-body d-flex flex-column">
                           <h5 className="card-title">{product.name}</h5>
                           <p className="card-text">{product.description}</p>
                           <span className="price-tag">{product.price}</span>
-                          <button className="btn btn-buy mt-auto">
-                            Comprar
-                          </button>
+                          <button className="btn btn-buy mt-auto">Comprar</button>
                         </div>
                       </div>
                     </div>
@@ -175,9 +185,6 @@ const Vendidos = () => {
         }
 
         .card-img-top {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
           transition: transform 0.3s ease;
         }
 
