@@ -10,6 +10,8 @@ import "../../public/css/Footer.css";
 import "../../public/css/produto.css";
 import "../../public/css/cardsprodutos.css";
 import "../../public/css/navbar.css";
+import "../../public/css/Carrinho.css";
+
 // não importe o bootstrap.bundle.min.js aqui
 
 
