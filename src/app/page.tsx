@@ -4,6 +4,7 @@ import Footer from "@/components/Footer/Footer";
 import Header from "@/components/home/home";
 import Produtos from "@/components/produtos/produto";
 import WhatsApp from "@/components/redesocial/whats";
+import FaixaDePrecos from "@/components/Vendidos/Cupons";
 import Cupons from "@/components/Vendidos/Cupons";
 import Vendidos from "@/components/Vendidos/vendidos";
 
@@ -13,7 +14,7 @@ export default function Home() {
     <div>
      <Header />
      <Banner />
-     <Cupons />
+     <FaixaDePrecos />
      <Produtos />
      <BannerVantagens />
      <Vendidos />

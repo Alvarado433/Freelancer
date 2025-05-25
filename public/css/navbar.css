@@ -12,7 +12,7 @@
   box-shadow: 0 2px 6px rgba(171, 111, 157, 0.25);
   border-radius: 0 0 6px 6px;
   position: relative;
-  z-index: 10;
+  z-index: 100;
 }
 
 .mensagem-promocional strong {
@@ -31,7 +31,9 @@
   color: #4a148c;
 }
 
-/* Sidebar */
+/* ============================= */
+/* 2. Sidebar (Menu Mobile)      */
+/* ============================= */
 .sidebar-menu {
   position: fixed;
   top: 0;
@@ -40,21 +42,24 @@
   height: 100vh;
   background: #fff;
   padding: 1.5rem;
-  box-shadow: 2px 0 8px rgb(0 0 0 / 0.15);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   transition: left 0.3s ease-in-out;
   z-index: 1050;
   display: flex;
   flex-direction: column;
 }
+
 .sidebar-menu.open {
   left: 0;
 }
+
 .sidebar-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1040;
 }
+
 .nav-link {
   color: #333;
   font-weight: 500;
@@ -62,12 +67,14 @@
   cursor: pointer;
   text-decoration: none;
 }
+
 .nav-link:hover {
   color: #d6336c;
-  text-decoration: none;
 }
 
-/* Dropdown desktop categorias */
+/* ============================= */
+/* 3. Categorias Desktop         */
+/* ============================= */
 .categorias-container {
   background-color: #d6336c;
   padding: 0.5rem 1rem;
@@ -75,9 +82,9 @@
   user-select: none;
   display: flex;
   justify-content: center;
-  user-select: none;
-  z-index: 111;
+  z-index: 101;
 }
+
 .categoria-toggle {
   background: none;
   border: none;
@@ -92,17 +99,23 @@
   border-radius: 4px;
   transition: background-color 0.3s;
 }
+
 .categoria-toggle:hover,
 .categoria-toggle:focus {
   background-color: rgba(255, 255, 255, 0.15);
   outline: none;
 }
-.icon {
+
+.icon,
+.icon-sidebar {
   transition: transform 0.3s ease;
 }
-.icon.rotated {
+
+.icon.rotated,
+.icon-sidebar.rotated {
   transform: rotate(180deg);
 }
+
 .dropdown-categorias {
   position: absolute;
   top: 100%;
@@ -121,12 +134,15 @@
   pointer-events: none;
   z-index: 120;
 }
+
 .dropdown-categorias.show {
   max-height: 400px;
   opacity: 1;
   pointer-events: auto;
 }
-.dropdown-link {
+
+.dropdown-link,
+.dropdown-link-sidebar {
   display: block;
   padding: 0.5rem 1rem;
   color: #333;
@@ -134,13 +150,16 @@
   text-decoration: none;
   transition: background-color 0.2s;
 }
-.dropdown-link:hover {
+
+.dropdown-link:hover,
+.dropdown-link-sidebar:hover {
   background-color: #f8d7df;
   color: #d6336c;
-  text-decoration: none;
 }
 
-/* Dropdown sidebar categorias */
+/* ============================= */
+/* 4. Categorias Sidebar Mobile  */
+/* ============================= */
 .categoria-toggle-sidebar {
   background: none;
   border: none;
@@ -157,41 +176,26 @@
   transition: background-color 0.3s;
   text-align: left;
 }
+
 .categoria-toggle-sidebar:hover,
 .categoria-toggle-sidebar:focus {
   background-color: #f8d7df;
   outline: none;
 }
-.icon-sidebar {
-  transition: transform 0.3s ease;
-  margin-left: auto;
-}
-.icon-sidebar.rotated {
-  transform: rotate(180deg);
-}
+
 .dropdown-categorias-sidebar {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
+
 .dropdown-categorias-sidebar.show {
   max-height: 300px;
 }
-.dropdown-link-sidebar {
-  display: block;
-  padding: 0.5rem 1rem 0.5rem 1.5rem;
-  color: #333;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-.dropdown-link-sidebar:hover {
-  background-color: #f8d7df;
-  color: #d6336c;
-  text-decoration: none;
-}
 
-/* Dropdown menu usuário */
+/* ============================= */
+/* 5. Menu Usuário Dropdown      */
+/* ============================= */
 .dropdown-user-menu {
   position: absolute;
   right: 0;
@@ -203,12 +207,15 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   z-index: 120;
 }
+
 .dropdown-user-menu p {
   margin: 0;
   font-size: 0.9rem;
 }
 
-/* Busca flutuante (lupa) responsiva */
+/* ============================= */
+/* 6. Busca Flutuante Mobile     */
+/* ============================= */
 .floating-search-container {
   position: fixed;
   top: 0;
@@ -216,13 +223,14 @@
   width: 100vw;
   background: white;
   padding: 0.75rem 1rem;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   z-index: 1100;
   display: flex;
   justify-content: center;
   align-items: center;
   animation: slideDown 0.3s ease forwards;
 }
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -233,13 +241,16 @@
     transform: translateY(0);
   }
 }
+
 .floating-search-form {
   display: flex;
   width: 100%;
   max-width: 600px;
   gap: 0.5rem;
 }
-.floating-search-input {
+
+.floating-search-input,
+.search-mobile-form input.form-control {
   flex-grow: 1;
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
@@ -247,7 +258,12 @@
   border-radius: 4px;
   outline-color: #d6336c;
 }
-.floating-search-btn {
+
+/* ============================= */
+/* 7. Botões de Busca            */
+/* ============================= */
+.floating-search-btn,
+.search-mobile-form button {
   background: transparent;
   border: none;
   color: #d6336c;
@@ -259,15 +275,79 @@
   padding: 0 0.5rem;
   transition: color 0.2s;
 }
+
 .floating-search-btn:hover,
-.floating-search-btn:focus {
+.floating-search-btn:focus,
+.search-mobile-form button:hover,
+.search-mobile-form button:focus {
   color: #a02040;
   outline: none;
 }
 
-/* Oculta a busca flutuante no desktop */
+/* ============================= */
+/* 8. Busca Mobile - Overlay     */
+/* ============================= */
+.search-mobile-overlay {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+}
+
+/* ============================= */
+/* 9. Custom Search Input/Button */
+/* ============================= */
+.custom-search-input {
+  border: 2px solid #b35c6a;
+  border-right: none;
+  border-radius: 30px 0 0 30px;
+  padding: 0.5rem 1rem;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.custom-search-input:focus {
+  border-color: #9e4e5e;
+  box-shadow: 0 0 0 2px rgba(179, 92, 106, 0.2);
+}
+
+.custom-search-button {
+  background-color: #b35c6a;
+  color: white;
+  border: 2px solid #b35c6a;
+  border-left: none;
+  border-radius: 0 30px 30px 0;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.custom-search-button:hover {
+  background-color: #9e4e5e;
+  border-color: #9e4e5e;
+}
+
+/* ============================= */
+/* 10. Global Helpers            */
+/* ============================= */
+.rotated {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+/* ============================= */
+/* 11. Responsividade Geral      */
+/* ============================= */
 @media (min-width: 768px) {
   .floating-search-container {
+    display: none;
+  }
+
+  .sidebar-menu {
     display: none;
   }
 }
