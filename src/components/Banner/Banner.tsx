@@ -40,6 +40,7 @@ export default function Banner(): JSX.Element {
             )}
           </div>
         ))}
+
         <button
           className="control prev"
           onClick={prevSlide}
