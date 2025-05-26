@@ -27,6 +27,18 @@ const banners: BannerItem[] = [
     ctaText: "Surpreenda quem você ama com nossos produtos temáticos!",
     ctaLink: "#dia-dos-namorados",
   },
+  {
+    src: "/img/banner01.png",
+    alt: "banner",
+    ctaText: "Surpreenda quem você ama com nossos produtos temáticos!",
+    ctaLink: "#dia-dos-namorados",
+  },
+  {
+    src: "/img/banner02.png",
+    alt: "banner",
+    ctaText: "Surpreenda quem você ama com nossos produtos temáticos!",
+    ctaLink: "#dia-dos-namorados",
+  },
 ];
 
 export default function Banner(): JSX.Element {
