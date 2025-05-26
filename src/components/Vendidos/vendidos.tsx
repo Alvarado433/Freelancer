@@ -1,364 +1,325 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  image: string;
-};
-
-const products: Product[] = [
+const produtosMaisVendidos = [
   {
     id: 1,
-    name: "Produto 1",
-    description: "Descrição rápida e atrativa do produto 1.",
-    price: "R$ 49,90",
-    image: "/img/produto1.jpg",
+    name: "Produto A",
+    description: "Descrição do Produto A, muito legal e útil.",
+    price: "R$ 99,90",
+    image: "https://via.placeholder.com/300x200?text=Produto+A",
   },
   {
     id: 2,
-    name: "Produto 2",
-    description: "Descrição rápida e atrativa do produto 2.",
-    price: "R$ 79,90",
-    image: "/img/produto2.jpg",
+    name: "Produto B",
+    description: "Descrição do Produto B, excelente qualidade.",
+    price: "R$ 149,90",
+    image: "https://via.placeholder.com/300x200?text=Produto+B",
   },
   {
     id: 3,
-    name: "Produto 3",
-    description: "Descrição rápida e atrativa do produto 3.",
-    price: "R$ 39,90",
-    image: "/img/produto3.jpg",
+    name: "Produto C",
+    description: "Descrição do Produto C, super recomendado.",
+    price: "R$ 79,90",
+    image: "https://via.placeholder.com/300x200?text=Produto+C",
   },
   {
     id: 4,
-    name: "Produto 4",
-    description: "Descrição rápida e atrativa do produto 4.",
-    price: "R$ 59,90",
-    image: "/img/produto4.jpg",
+    name: "Produto D",
+    description: "Descrição do Produto D, muito popular.",
+    price: "R$ 119,90",
+    image: "https://via.placeholder.com/300x200?text=Produto+D",
   },
   {
     id: 5,
-    name: "Produto 5",
-    description: "Descrição rápida e atrativa do produto 5.",
-    price: "R$ 69,90",
-    image: "/img/produto5.jpg",
-  },
-  {
-    id: 6,
-    name: "Produto 6",
-    description: "Descrição rápida e atrativa do produto 6.",
-    price: "R$ 89,90",
-    image: "/img/produto6.jpg",
+    name: "Produto E",
+    description: "Descrição do Produto E, qualidade premium.",
+    price: "R$ 199,90",
+    image: "https://via.placeholder.com/300x200?text=Produto+E",
   },
 ];
 
-const chunkArray = (arr: Product[], size: number): Product[][] => {
-  const result: Product[][] = [];
+function chunkArray<T>(arr: T[], size: number): T[][] {
+  const chunks = [];
   for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
+    chunks.push(arr.slice(i, i + size));
   }
-  return result;
-};
+  return chunks;
+}
 
-const Vendidos = () => {
-  const slides = chunkArray(products, 2);
+export default function Vendidos() {
+  const slides = chunkArray(produtosMaisVendidos, 3);
 
   return (
-    <section className="section-container">
-      <div className="container">
-        <h2 className="section-title">Mais Vendidos da Semana</h2>
+    <>
+      <section className="section-container">
+        <div className="container">
+          <h2 className="section-title">Mais Vendidos da Semana</h2>
 
-        <div
-          id="carouselVendidos"
-          className="carousel slide"
-          data-bs-ride="carousel"
-          data-bs-interval="6000"
-        >
-          <div className="carousel-inner">
-            {slides.map((group, idx) => (
-              <div
-                key={idx}
-                className={`carousel-item${idx === 0 ? " active" : ""}`}
-              >
-                <div className="row justify-content-center g-5">
-                  {group.map((product) => (
-                    <div
-                      key={product.id}
-                      className="col-lg-5 col-md-6 col-sm-10 d-flex align-items-stretch"
-                    >
-                      <div className="card product-card d-flex flex-column shadow-sm">
-                        <div className="img-wrapper">
-                          <Image
+          <div
+            id="carouselVendidos"
+            className="carousel slide"
+            data-bs-ride="carousel"
+          >
+            {/* Indicadores */}
+            <div className="carousel-indicators">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  data-bs-target="#carouselVendidos"
+                  data-bs-slide-to={i}
+                  className={i === 0 ? "active" : ""}
+                  aria-current={i === 0 ? "true" : undefined}
+                  aria-label={`Slide ${i + 1}`}
+                ></button>
+              ))}
+            </div>
+
+            {/* Slides */}
+            <div className="carousel-inner">
+              {slides.map((grupo, index) => (
+                <div
+                  key={index}
+                  className={`carousel-item ${index === 0 ? "active" : ""}`}
+                >
+                  <div className="slide-wrapper">
+                    {grupo.map((product) => (
+                      <article
+                        key={product.id}
+                        className="card product-card"
+                        tabIndex={0}
+                        aria-label={`${product.name} - ${product.price}`}
+                      >
+                        <div className="card-img-container">
+                          <img
                             src={product.image}
-                            alt={product.name}
-                            width={400}
-                            height={220}
                             className="card-img-top"
-                            style={{
-                              objectFit: "cover",
-                              width: "100%",
-                              height: "100%",
-                              borderTopLeftRadius: "16px",
-                              borderTopRightRadius: "16px",
-                            }}
+                            alt={product.name}
+                            loading="lazy"
                           />
                         </div>
-                        <div className="card-body d-flex flex-column">
-                          <h5 className="card-title">{product.name}</h5>
+                        <div className="card-body">
+                          <h3 className="card-title">{product.name}</h3>
                           <p className="card-text">{product.description}</p>
                           <span className="price-tag">{product.price}</span>
-                          <button className="btn btn-buy mt-auto" aria-label={`Comprar ${product.name}`}>
+                          <button
+                            className="btn btn-buy"
+                            aria-label={`Comprar ${product.name}`}
+                          >
                             Comprar
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={2}
-                              stroke="currentColor"
-                              className="buy-icon"
-                              aria-hidden="true"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m5-9l-1.35 6.75a2 2 0 01-1.99 1.5H9.35a2 2 0 01-1.99-1.5L6 8"
-                              />
-                            </svg>
                           </button>
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      </article>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Controles */}
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselVendidos"
+              data-bs-slide="prev"
+              aria-label="Slide anterior"
+            >
+              <span
+                className="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselVendidos"
+              data-bs-slide="next"
+              aria-label="Próximo slide"
+            >
+              <span
+                className="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+            </button>
           </div>
-
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselVendidos"
-            data-bs-slide="prev"
-            aria-label="Anterior"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselVendidos"
-            data-bs-slide="next"
-            aria-label="Próximo"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true" />
-          </button>
         </div>
-
-        <div className="text-center mt-5">
-          <button className="btn btn-more-sellers shadow">
-            Ver todos os mais vendidos
-          </button>
-        </div>
-      </div>
+      </section>
 
       <style jsx>{`
+        .section-title {
+          text-align: center;
+          color: #ff4081;
+          margin-bottom: 40px;
+          font-weight: 900;
+          font-size: 2.5rem;
+          font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          letter-spacing: 0.05em;
+        }
+
         .section-container {
-          background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
-          padding: 5rem 0 6rem;
-          font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-            sans-serif;
-          color: #222;
+          padding: 50px 15px;
+          background: #fff0f6;
         }
 
         .container {
-          max-width: 1140px;
+          max-width: 960px;
           margin: 0 auto;
-          padding: 0 1rem;
         }
 
-        .section-title {
-          text-align: center;
-          font-weight: 900;
-          font-size: 2.9rem;
-          color: #1a1a1a;
-          margin-bottom: 3rem;
-          letter-spacing: -0.04em;
-          text-transform: uppercase;
-          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.07);
+        /* Wrapper do grupo de cards no slide */
+        .slide-wrapper {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: nowrap;
+          padding-bottom: 10px;
         }
 
+        /* Card do produto */
         .product-card {
-          border-radius: 16px;
           background: #fff;
-          border: 1px solid #e3e3e3;
-          transition: transform 0.35s ease, box-shadow 0.35s ease;
-          overflow: hidden;
+          border-radius: 12px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          border: 1px solid #e0e0e0;
+          width: 250px;
           display: flex;
           flex-direction: column;
-        }
-
-        .product-card:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 28px 40px rgba(0, 0, 0, 0.12);
-          border-color: #0d6efd;
-          background: #fefefe;
-        }
-
-        .img-wrapper {
           overflow: hidden;
-          border-bottom: 1px solid #eaeaea;
-          height: 220px;
-          border-top-left-radius: 16px;
-          border-top-right-radius: 16px;
-          background: #f8f8f8;
-          box-shadow: inset 0 0 10px #f0f0f0;
+          transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+          cursor: pointer;
+          outline-offset: 3px;
+        }
+
+        .product-card:focus,
+        .product-card:hover {
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          border-color: #ff4081;
+          transform: translateY(-4px);
+          outline: none;
+        }
+
+        .card-img-container {
+          height: 140px;
+          overflow: hidden;
+          border-top-left-radius: 12px;
+          border-top-right-radius: 12px;
+          background: #fafafa;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .card-img-top {
-          transition: transform 0.4s ease;
-          border-top-left-radius: 16px;
-          border-top-right-radius: 16px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
         }
 
-        .product-card:hover .card-img-top {
-          transform: scale(1.12);
+        .product-card:hover .card-img-top,
+        .product-card:focus .card-img-top {
+          transform: scale(1.05);
         }
 
         .card-body {
-          padding: 1.8rem 2rem 2rem;
+          padding: 16px 16px;
           display: flex;
           flex-direction: column;
+          gap: 10px;
           flex-grow: 1;
         }
 
         .card-title {
-          font-weight: 800;
-          font-size: 1.6rem;
-          color: #0d6efd;
-          margin-bottom: 0.7rem;
-          letter-spacing: -0.02em;
+          font-weight: 700;
+          font-size: 1.2rem;
+          color: #222;
+          margin: 0;
+          font-family: "Poppins", sans-serif;
+          text-transform: capitalize;
+          line-height: 1.2;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .card-text {
-          font-size: 1.05rem;
-          color: #6c757d;
-          margin-bottom: 1.25rem;
+          font-size: 0.9rem;
+          color: #555;
           flex-grow: 1;
-          line-height: 1.4;
+          margin: 0;
+          font-family: "Open Sans", sans-serif;
+          line-height: 1.3;
+          height: 36px; /* limita a 2 linhas, com overflow */
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .price-tag {
-          font-weight: 900;
-          font-size: 1.5rem;
-          color: #198754;
-          margin-bottom: 2rem;
-          display: block;
-          letter-spacing: 0.02em;
+          font-weight: 700;
+          font-size: 1.3rem;
+          color: #e91e63;
+          font-family: "Poppins", sans-serif;
         }
 
         .btn-buy {
-          background-color: #0d6efd;
-          color: white;
+          margin-top: auto;
+          background: #ff4081;
           border: none;
-          border-radius: 50px;
-          padding: 0.75rem 2.25rem;
-          font-weight: 700;
-          font-size: 1.15rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.7rem;
+          color: white;
+          font-weight: 600;
+          padding: 10px 0;
+          border-radius: 24px;
+          box-shadow: 0 4px 12px rgba(255, 64, 129, 0.5);
+          transition: background 0.3s ease, box-shadow 0.3s ease;
+          font-size: 1rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          width: 100%;
           cursor: pointer;
-          transition: background-color 0.3s ease, box-shadow 0.3s ease;
-          box-shadow: 0 6px 12px rgba(13, 110, 253, 0.35);
-          user-select: none;
         }
 
-        .btn-buy:hover {
-          background-color: #0843c9;
-          box-shadow: 0 10px 18px rgba(8, 67, 201, 0.55);
+        .btn-buy:hover,
+        .btn-buy:focus {
+          background: #e91e63;
+          box-shadow: 0 6px 18px rgba(233, 30, 99, 0.7);
+          outline: none;
         }
 
-        .buy-icon {
-          width: 1.25rem;
-          height: 1.25rem;
-          stroke-width: 2.5;
-          stroke: white;
-          transition: transform 0.3s ease;
-        }
-
-        .btn-buy:hover .buy-icon {
-          transform: translateX(4px);
-        }
-
-        .btn-more-sellers {
-          background-color: #0d6efd;
-          color: white;
-          border: none;
-          border-radius: 50px;
-          padding: 1rem 3.5rem;
-          font-size: 1.3rem;
-          font-weight: 800;
-          transition: box-shadow 0.3s ease, background-color 0.3s ease;
-          box-shadow: 0 8px 22px rgba(13, 110, 253, 0.4);
-          user-select: none;
-        }
-
-        .btn-more-sellers:hover {
-          box-shadow: 0 14px 45px rgba(8, 67, 201, 0.6);
-          background-color: #0843c9;
-        }
-
+        /* Carousel controls custom */
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
-          filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
-          width: 3rem;
-          height: 3rem;
+          filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
+          width: 40px;
+          height: 40px;
         }
+
+        /* Responsividade */
 
         @media (max-width: 991px) {
-          .img-wrapper {
-            height: 180px;
+          .slide-wrapper {
+            gap: 18px;
           }
-          .card-title {
-            font-size: 1.45rem;
-          }
-          .price-tag {
-            font-size: 1.3rem;
-          }
-          .btn-buy {
-            font-size: 1.05rem;
-            padding: 0.65rem 2rem;
+
+          .product-card {
+            width: 45vw;
           }
         }
 
-        @media (max-width: 575px) {
-          .img-wrapper {
-            height: 140px;
+        @media (max-width: 576px) {
+          .slide-wrapper {
+            gap: 14px;
           }
-          .card-title {
-            font-size: 1.15rem;
+
+          .product-card {
+            width: 80vw;
           }
-          .price-tag {
-            font-size: 1.15rem;
-          }
-          .btn-buy {
-            padding: 0.55rem 1.5rem;
-            font-size: 1rem;
-          }
-          .carousel-control-prev-icon,
-          .carousel-control-next-icon {
-            width: 2.2rem;
-            height: 2.2rem;
+
+          /* Remove os indicadores para tela mobile para simplificar */
+          .carousel-indicators {
+            display: none;
           }
         }
       `}</style>
-    </section>
+    </>
   );
-};
-
-export default Vendidos;
+}

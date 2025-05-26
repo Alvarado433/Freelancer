@@ -132,15 +132,7 @@ export default function Navbar() {
           </div>
         </div>
         <nav className="nav flex-column">
-          <Link href="/" legacyBehavior>
-            <a className="nav-link mb-3">Home</a>
-          </Link>
-          <Link href="/produtos" legacyBehavior>
-            <a className="nav-link mb-3">Produtos</a>
-          </Link>
-          <Link href="/contato" legacyBehavior>
-            <a className="nav-link mb-3">Contato</a>
-          </Link>
+          
           <div className="sidebar-dropdown">
             <button
               type="button"

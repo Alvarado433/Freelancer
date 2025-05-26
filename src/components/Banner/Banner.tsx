@@ -4,12 +4,29 @@ import React, { useState, useEffect, JSX } from "react";
 interface BannerItem {
   src: string;
   alt: string;
+  ctaText: string;
+  ctaLink: string;
 }
 
 const banners: BannerItem[] = [
-  { src: "/img/logotipo2.jpeg", alt: "Banner 1" },
-  { src: "/img/logotipo3.jpeg", alt: "Banner 2" },
-  { src: "https://picsum.photos/id/1019/1200/500", alt: "Banner 3" },
+  {
+    src: "/img/logotipo2.jpeg",
+    alt: "Banner 1",
+    ctaText: "Escolha o presente ideal para o seu amor!",
+    ctaLink: "#dia-dos-namorados",
+  },
+  {
+    src: "/img/logotipo3.jpeg",
+    alt: "Banner 2",
+    ctaText: "Presentes especiais para momentos inesquecíveis!",
+    ctaLink: "#dia-dos-namorados",
+  },
+  {
+    src: "https://picsum.photos/id/1019/1200/500",
+    alt: "Banner 3",
+    ctaText: "Surpreenda quem você ama com nossos produtos temáticos!",
+    ctaLink: "#dia-dos-namorados",
+  },
 ];
 
 export default function Banner(): JSX.Element {
@@ -36,15 +53,33 @@ export default function Banner(): JSX.Element {
             className={`slide ${index === current ? "active" : ""}`}
           >
             {index === current && (
-              <img src={banner.src} alt={banner.alt} className="slide-image" />
+              <>
+                <img src={banner.src} alt={banner.alt} className="slide-image" />
+                <div className="cta-box" role="region" aria-label="Chamada para ação">
+                  <p>{banner.ctaText}</p>
+                  <a href={banner.ctaLink} className="cta-button" tabIndex={0}>
+                    Ver presentes
+                  </a>
+                </div>
+              </>
             )}
           </div>
         ))}
 
-        <button className="control prev" onClick={prevSlide} aria-label="Anterior">
+        <button
+          className="control prev"
+          onClick={prevSlide}
+          aria-label="Anterior"
+          type="button"
+        >
           &#10094;
         </button>
-        <button className="control next" onClick={nextSlide} aria-label="Próximo">
+        <button
+          className="control next"
+          onClick={nextSlide}
+          aria-label="Próximo"
+          type="button"
+        >
           &#10095;
         </button>
       </div>
@@ -55,6 +90,12 @@ export default function Banner(): JSX.Element {
             key={index}
             className={`dot ${index === current ? "active" : ""}`}
             onClick={() => goToSlide(index)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Ir para slide ${index + 1}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") goToSlide(index);
+            }}
           />
         ))}
       </div>
@@ -69,8 +110,10 @@ export default function Banner(): JSX.Element {
           position: relative;
           width: 100%;
           height: 0;
-          padding-bottom: 65%; /* AUMENTADO de 55% para 65% */
+          padding-bottom: 65%;
           background-color: #f7f7f7;
+          overflow: hidden;
+          border-radius: 12px;
         }
 
         .slide {
@@ -93,6 +136,58 @@ export default function Banner(): JSX.Element {
           height: 100%;
           object-fit: cover;
           border-radius: 12px;
+          display: block;
+        }
+
+        /* CTA Box centralizado na parte inferior/média do banner */
+        .cta-box {
+          position: absolute;
+          left: 50%;
+          top: 75%;
+          transform: translate(-50%, -50%);
+          max-width: 360px;
+          background: rgba(255 255 255 / 0.75);
+          border-radius: 12px;
+          padding: 18px 28px;
+          box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
+          color: #333;
+          font-family: "Poppins", sans-serif;
+          user-select: none;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+
+        .cta-box p {
+          font-size: 1.3rem;
+          font-weight: 700;
+          line-height: 1.3;
+          margin: 0;
+          color: #ff4081;
+          text-shadow: 0 1px 3px rgba(255, 64, 129, 0.5);
+        }
+
+        .cta-button {
+          background-color: #ff4081;
+          color: white;
+          font-weight: 600;
+          padding: 10px 22px;
+          border-radius: 24px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 1rem;
+          box-shadow: 0 5px 15px rgba(255, 64, 129, 0.5);
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .cta-button:hover,
+        .cta-button:focus {
+          background-color: #e91e63;
+          box-shadow: 0 8px 20px rgba(233, 30, 99, 0.7);
+          outline: none;
         }
 
         .control {
@@ -108,10 +203,13 @@ export default function Banner(): JSX.Element {
           border-radius: 50%;
           z-index: 2;
           transition: background-color 0.3s;
+          user-select: none;
         }
 
-        .control:hover {
+        .control:hover,
+        .control:focus {
           background-color: rgba(255, 255, 255, 0.9);
+          outline: none;
         }
 
         .control.prev {
@@ -127,6 +225,7 @@ export default function Banner(): JSX.Element {
           justify-content: center;
           gap: 10px;
           margin-top: 0.8rem;
+          user-select: none;
         }
 
         .dot {
@@ -136,6 +235,7 @@ export default function Banner(): JSX.Element {
           border-radius: 50%;
           cursor: pointer;
           transition: background-color 0.3s ease;
+          display: inline-block;
         }
 
         .dot.active {
@@ -148,12 +248,29 @@ export default function Banner(): JSX.Element {
           }
 
           .slide-image {
-            object-fit: contain; /* MOSTRA A IMAGEM COMPLETA NO RESPONSIVO */
-            background-color: white; /* fundo neutro caso a imagem não cubra tudo */
+            object-fit: contain;
+            background-color: white;
           }
 
           .control {
             font-size: 1.5rem;
+          }
+
+          .cta-box {
+            left: 50%;
+            top: 80%;
+            max-width: 90vw;
+            padding: 14px 18px;
+            text-align: center;
+          }
+
+          .cta-box p {
+            font-size: 1rem;
+          }
+
+          .cta-button {
+            font-size: 0.95rem;
+            padding: 10px 16px;
           }
         }
       `}</style>
