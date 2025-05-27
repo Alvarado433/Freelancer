@@ -1,4 +1,4 @@
-import Link from "next/link"; // Use Link do Next.js, não do lucide-react
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
@@ -27,26 +27,36 @@ export default function DropdownCategorias() {
   }, [open]);
 
   return (
-    <div className="categorias-container d-none d-md-flex" ref={dropdownRef}>
-      <button
-        type="button"
-        className="categoria-toggle"
-        onClick={() => setOpen((o) => !o)}
-        aria-haspopup="true"
-        aria-expanded={open}
-      >
-        Categorias <FaChevronDown className={`icon ${open ? "rotated" : ""}`} />
-      </button>
+    <div className="categorias-container d-none d-md-flex" ref={dropdownRef} style={{ alignItems: "center", gap: "1.5rem" }}>
+      {/* Dropdown Categorias */}
+      <div>
+        <button
+          type="button"
+          className="categoria-toggle"
+          onClick={() => setOpen((o) => !o)}
+          aria-haspopup="true"
+          aria-expanded={open}
+        >
+          Categorias <FaChevronDown className={`icon ${open ? "rotated" : ""}`} />
+        </button>
 
-      <div className={`dropdown-categorias ${open ? "show" : ""}`}>
-        {categorias.map((categoria) => (
-          <Link key={categoria} href={`/categoria/${categoria.toLowerCase()}`} legacyBehavior>
-            <a className="dropdown-link" onClick={() => setOpen(false)}>
-              {categoria}
-            </a>
-          </Link>
-        ))}
+        <div className={`dropdown-categorias ${open ? "show" : ""}`}>
+          {categorias.map((categoria) => (
+            <Link key={categoria} href={`/categoria/${categoria.toLowerCase()}`} legacyBehavior>
+              <a className="dropdown-link" onClick={() => setOpen(false)}>
+                {categoria}
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
+
+      {/* Link Cursos com mesma classe sem ícone */}
+      <Link href="/Cursos" legacyBehavior>
+        <a className="categoria-toggle">
+          Cursos
+        </a>
+      </Link>
     </div>
   );
 }
